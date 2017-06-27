@@ -25,18 +25,30 @@ public class Task {
         this.comment = comment;
     }
 
+    public Task(String taskId) {
+        this.taskId = taskId;
+    }
+
     public long getMinPerTask(){
         return (endTime.toSecondOfDay() - startTime.toSecondOfDay()) / 60;
     }
 
+    @Deprecated
     public boolean isValidTask(){
         Pattern pattern = Pattern.compile("^((\\d{4})|(LT-\\d{4})){1}$");
         return pattern.matcher(taskId).find();
     }
 
-    public boolean isMultipleQuarterHour(){
-        return getMinPerTask() % 15 == 0;
+    public boolean isValidRedmineTaskId(){
+        Pattern pattern = Pattern.compile("^\\d{4}$");
+        return pattern.matcher(taskId).find();
     }
+
+    public boolean isValidLTTaskId(){
+        Pattern pattern = Pattern.compile("^LT-\\d{4}$");
+        return pattern.matcher(taskId).find();
+    }
+
 
     public String getTaskId() {
         return taskId;
@@ -52,5 +64,29 @@ public class Task {
 
     public String getComment() {
         return comment;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = LocalTime.parse(startTime);
+    }
+
+    public void setStartTime(int startHour, int startMin) {
+        this.startTime = LocalTime.of(startHour, startMin);
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = LocalTime.parse(endTime);
+    }
+
+    public void setEndTime(int endHour, int endMin) {
+        this.endTime = LocalTime.of(endHour, endMin);
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

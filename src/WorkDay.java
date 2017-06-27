@@ -24,25 +24,11 @@ public class WorkDay {
         return requiredMinPerDay - sumPerDay;
     }
 
-    public boolean isSeparatedTime(Task t){
-        for(Task task : tasks) {
-            if (task.getEndTime().isAfter(t.getEndTime()) && task.getStartTime().isBefore(t.getEndTime())
-                    || task.getEndTime().isAfter(t.getStartTime()) && task.getStartTime().isBefore(t.getStartTime())) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public void addTask(Task t){
-        if(t.isMultipleQuarterHour() && isSeparatedTime(t)){
+        if(Util.isMultipleQuarterHour(t.getStartTime(), t.getEndTime()) && Util.isSeparatedTime(tasks, t)){
             tasks.add(t);
         }
-    }
-
-    public boolean isWeekDay(){
-        DayOfWeek dayOfWeek = actualDay.getDayOfWeek();
-        return !(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
     }
 
     public long getRequiredMinPerDay() {
@@ -55,5 +41,17 @@ public class WorkDay {
 
     public long getSumPerDay() {
         return sumPerDay;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setRequiredMinPerDay(long requiredMinPerDay) {
+        this.requiredMinPerDay = requiredMinPerDay;
+    }
+
+    public void setActualDay(int year, int month, int day) {
+        this.actualDay = LocalDate.of(year, month, day);
     }
 }
