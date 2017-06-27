@@ -1,0 +1,15 @@
+nbproject/
+
+build/
+
+nbbuild/
+
+dist/
+
+nbdist/
+
+.nb-gradle/
+
+.idea/
+*.iml
+out/
