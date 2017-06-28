@@ -99,11 +99,17 @@ public class Task {
         return taskId;
     }
 
-    public LocalTime getStartTime() {
+    public LocalTime getStartTime() throws EmptyTimeFieldException {
+        if(startTime == null){
+            throw new EmptyTimeFieldException();
+        }
         return startTime;
     }
 
-    public LocalTime getEndTime() {
+    public LocalTime getEndTime() throws EmptyTimeFieldException {
+        if(startTime == null){
+            throw new EmptyTimeFieldException();
+        }
         return endTime;
     }
 

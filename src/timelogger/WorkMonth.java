@@ -1,5 +1,7 @@
 package timelogger;
 
+import timelogger.exception.EmptyTimeFieldException;
+
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class WorkMonth {
         date = YearMonth.of(year, month);
     }
 
-    public long getExtraMinPerMonth(){
+    public long getExtraMinPerMonth() throws EmptyTimeFieldException {
         long result = 0;
         for(WorkDay workDay : days){
             result += workDay.getExtraMinPerDay();

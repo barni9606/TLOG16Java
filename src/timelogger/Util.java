@@ -1,5 +1,7 @@
 package timelogger;
 
+import timelogger.exception.EmptyTimeFieldException;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,7 +27,18 @@ public class Util {
     }
 
     public static boolean isSeparatedTime(List<Task> tasks, Task t){
-        return tasks.stream().noneMatch(task -> task.getEndTime().isAfter(t.getEndTime()) && task.getStartTime().isBefore(t.getEndTime())
-                    || task.getEndTime().isAfter(t.getStartTime()) && task.getStartTime().isBefore(t.getStartTime()));
+        if(tasks.isEmpty()){
+            return true;
+        }
+
+        return tasks.stream().noneMatch(task -> {
+            try {
+                return task.getEndTime().isAfter(t.getEndTime()) && task.getStartTime().isBefore(t.getEndTime())
+                        || task.getEndTime().isAfter(t.getStartTime()) && task.getStartTime().isBefore(t.getStartTime());
+            } catch (EmptyTimeFieldException e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
     }
 }

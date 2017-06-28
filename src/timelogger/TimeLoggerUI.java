@@ -1,5 +1,7 @@
 package timelogger;
 
+import timelogger.exception.EmptyTimeFieldException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -109,7 +111,14 @@ public class TimeLoggerUI {
                     int menu7MonthIndex = listDays(workMonths, scanner);
                     List<WorkDay> menu7WorkDays = workMonths.get(menu7MonthIndex - 1).getDays();
 
-                    List<Task> menu7Tasks = getDay(menu7WorkDays, scanner).getTasks().stream().filter(task -> task.getEndTime() == null).collect(Collectors.toList());
+                    List<Task> menu7Tasks = getDay(menu7WorkDays, scanner).getTasks().stream().filter(task -> {
+                        try {
+                            return task.getEndTime() == null;
+                        } catch (EmptyTimeFieldException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
                     for(int i = 0; i < menu7Tasks.size(); i++){
                         System.out.println(i + 1 + ". " + menu7Tasks.get(i));
                     }
