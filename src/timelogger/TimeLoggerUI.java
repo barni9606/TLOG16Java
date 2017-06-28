@@ -1,3 +1,5 @@
+package timelogger;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
  * Created by bschenk on 6/27/17.
  */
 public class TimeLoggerUI {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Throwable {
         Scanner scanner = new Scanner(System.in);
         int menuChoice;
         List<WorkMonth> workMonths = new ArrayList<>();
@@ -149,7 +151,7 @@ public class TimeLoggerUI {
                     System.out.println("Please select a task");
                     Task menu9Task = menu9Tasks.get(scanner.nextInt());
                     System.out.println("You can now modify the task");
-                    System.out.print("Task ID [" + menu9Task.getTaskId() + "]: ");
+                    System.out.print("timelogger.Task ID [" + menu9Task.getTaskId() + "]: ");
                     line = scanner.nextLine();
                     String menu9NewTaskID = line.isEmpty() ? menu9Task.getTaskId() : line;
                     System.out.print("Start Time [" + menu9Task.getStartTime().format(DateTimeFormatter.ofPattern("hh:mm")) + "] (hh:mm): ");

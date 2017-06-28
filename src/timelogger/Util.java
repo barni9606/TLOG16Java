@@ -1,3 +1,5 @@
+package timelogger;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -7,9 +9,9 @@ import java.util.List;
  * Created by bschenk on 6/27/17.
  */
 public class Util {
-    public static int roundToMultipleQuarterHour(LocalTime startTime, LocalTime endTime){
+    public static LocalTime roundToMultipleQuarterHour(LocalTime startTime, LocalTime endTime){
         int min = (endTime.toSecondOfDay() - startTime.toSecondOfDay()) / 60;
-        return Math.round(min / 15.0f) * 15;
+        return endTime.minusMinutes(min).plusMinutes(Math.round(min / 15.0f) * 15);
     }
 
     public static boolean isMultipleQuarterHour(LocalTime startTime, LocalTime endTime){

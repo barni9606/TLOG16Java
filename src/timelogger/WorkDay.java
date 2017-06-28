@@ -1,4 +1,5 @@
-import java.time.DayOfWeek;
+package timelogger;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
