@@ -1,11 +1,12 @@
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by bschenk on 6/27/17.
  */
 public class WorkMonth {
-    private List<WorkDay> days;
+    private List<WorkDay> days = new ArrayList<>();
     private YearMonth date;
     private long sumPerMonth;
     private long requiredMinPerMonth;

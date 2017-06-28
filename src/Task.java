@@ -49,6 +49,15 @@ public class Task {
         return pattern.matcher(taskId).find();
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId='" + taskId + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 
     public String getTaskId() {
         return taskId;
@@ -70,12 +79,20 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
     public void setStartTime(String startTime) {
         this.startTime = LocalTime.parse(startTime);
     }
 
     public void setStartTime(int startHour, int startMin) {
         this.startTime = LocalTime.of(startHour, startMin);
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public void setEndTime(String endTime) {
