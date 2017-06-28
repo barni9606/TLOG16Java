@@ -1,6 +1,9 @@
 package timelogger;
 
 import timelogger.exception.EmptyTimeFieldException;
+import timelogger.exception.NotNewDateException;
+import timelogger.exception.NotTheSameMonthException;
+import timelogger.exception.WeekendNotEnabledException;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -21,29 +24,40 @@ public class WorkMonth {
 
     public long getExtraMinPerMonth() throws EmptyTimeFieldException {
         long result = 0;
-        for(WorkDay workDay : days){
+        for (WorkDay workDay : days) {
             result += workDay.getExtraMinPerDay();
         }
         return result;
     }
 
-    public boolean isNewDate(WorkDay wd){
+    public boolean isNewDate(WorkDay wd) {
         return days.stream().noneMatch(day -> day.getActualDay().equals(wd.getActualDay()));
     }
 
-    public boolean isSameMonth(WorkDay wd){
+    public boolean isSameMonth(WorkDay wd) {
         return date.getYear() == wd.getActualDay().getYear() && date.getMonth().equals(wd.getActualDay().getMonth());
     }
 
-    public void addWorkDay(WorkDay wd, boolean isWeekendEnabled){
-        if(isSameMonth(wd) && isNewDate(wd) && (isWeekendEnabled || Util.isWeekDay(wd.getActualDay()))) {
-            days.add(wd);
+    public void addWorkDay(WorkDay wd, boolean isWeekendEnabled) throws WeekendNotEnabledException, NotNewDateException, NotTheSameMonthException {
+
+        if (isWeekendEnabled || Util.isWeekDay(wd.getActualDay())) {
+            if (!isSameMonth(wd)) {
+                throw new NotTheSameMonthException();
+            } else if (!isNewDate(wd)) {
+                throw new NotNewDateException();
+            } else {
+                days.add(wd);
+            }
+        } else {
+            throw new WeekendNotEnabledException();
         }
+
     }
 
-    public void addWorkDay(WorkDay wd){
+    public void addWorkDay(WorkDay wd) throws WeekendNotEnabledException, NotTheSameMonthException, NotNewDateException {
         addWorkDay(wd, false);
     }
+
     public List<WorkDay> getDays() {
         return days;
     }
@@ -53,10 +67,22 @@ public class WorkMonth {
     }
 
     public long getSumPerMonth() {
+        sumPerMonth = 0;
+        for (WorkDay workDay : days) {
+            try {
+                sumPerMonth += workDay.getSumPerDay();
+            } catch (EmptyTimeFieldException e) {
+                e.printStackTrace();
+            }
+        }
         return sumPerMonth;
     }
 
     public long getRequiredMinPerMonth() {
+        requiredMinPerMonth = 0;
+        for (WorkDay workDay : days) {
+            requiredMinPerMonth += workDay.getRequiredMinPerDay();
+        }
         return requiredMinPerMonth;
     }
 }
