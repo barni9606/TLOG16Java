@@ -64,7 +64,7 @@ public class WorkMonthTest {
     }
 
     @Test
-    public void test6() throws Exception {
+    public void test06() throws Exception {
         Assert.assertEquals(0, (new WorkMonth(2016, 7)).getRequiredMinPerMonth());
     }
 
@@ -113,11 +113,21 @@ public class WorkMonthTest {
     @Test(expected = EmptyTimeFieldException.class)
     public void test12() throws Exception {
         Task task = new Task("1234");
-        WorkDay workDay = new WorkDay();
+        WorkDay workDay = new WorkDay(LocalDate.of(2016, 9, 1));
         WorkMonth workMonth = new WorkMonth(2016, 9);
         workDay.addTask(task);
         workMonth.addWorkDay(workDay);
-    //    workMonth.getSumPerMonth();
+        workMonth.getSumPerMonth();
+    }
+
+    @Test(expected = EmptyTimeFieldException.class)
+    public void test13() throws Exception {
+        Task task = new Task("1234");
+        WorkDay workDay = new WorkDay(LocalDate.of(2016, 9, 1));
+        WorkMonth workMonth = new WorkMonth(2016, 9);
+        workDay.addTask(task);
+        workMonth.addWorkDay(workDay);
+        workMonth.getExtraMinPerMonth();
     }
 
 }

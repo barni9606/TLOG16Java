@@ -66,14 +66,10 @@ public class WorkMonth {
         return date;
     }
 
-    public long getSumPerMonth() {
+    public long getSumPerMonth() throws EmptyTimeFieldException {
         sumPerMonth = 0;
         for (WorkDay workDay : days) {
-            try {
-                sumPerMonth += workDay.getSumPerDay();
-            } catch (EmptyTimeFieldException e) {
-                e.printStackTrace();
-            }
+            sumPerMonth += workDay.getSumPerDay();
         }
         return sumPerMonth;
     }

@@ -1,9 +1,6 @@
 package timelogger;
 
-import timelogger.exception.EmptyTimeFieldException;
-import timelogger.exception.FutureWorkException;
-import timelogger.exception.NegativeMinutesOfWorkException;
-import timelogger.exception.NotSeparatedTimesException;
+import timelogger.exception.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -48,13 +45,16 @@ public class WorkDay {
     }
 
 
-    public void addTask(Task t) throws NotSeparatedTimesException, EmptyTimeFieldException {
+    public void addTask(Task t) throws NotSeparatedTimesException, NotExpectedTimeOrderException {
         if(!Util.isSeparatedTime(tasks, t)){
             throw new NotSeparatedTimesException();
         }
 
-
-        if (Util.isMultipleQuarterHour(t.getStartTime(), t.getEndTime())) {
+        try {
+            if (Util.isMultipleQuarterHour(t.getStartTime(), t.getEndTime())) {
+                tasks.add(t);
+            }
+        } catch (EmptyTimeFieldException e){
             tasks.add(t);
         }
 
