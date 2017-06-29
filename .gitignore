@@ -13,3 +13,4 @@ nbdist/
 .idea/
 *.iml
 out/
+doc/
